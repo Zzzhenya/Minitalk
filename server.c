@@ -15,5 +15,6 @@ int main(void)
 
 	server_id = getpid();
 	printf ("server pid: %d\n", server_id);
+	scanf("Waiting:");
 	return (0);
 }
