@@ -23,4 +23,11 @@ pid:
 
 
 
-	** 
+killpg() - send signal to all the members of a process group
+
+
+int killpg(pid_t pgrp, int sig);
+
+Returns 0 on success and -1 on error
+
+It's equivalent to kill(-pgrp, sig);
