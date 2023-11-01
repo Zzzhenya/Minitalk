@@ -1,20 +1,31 @@
 #include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-/* 
-	pid_t	getpid(void);
-
-getpid() returns the process ID of the calling 
-process.  The ID is guaranteed to be unique and 
-is useful for constructing temporary file names.
-*/
-
-int main(void)
+void	handler(int sig)
 {
-	pid_t	server_id;
+	if (sig ==SIGUSR1)
+		printf("1\n");
+	else
+		printf("0\n");
+}
 
-	server_id = getpid();
-	printf ("server pid: %d\n", server_id);
-	scanf("Waiting:");
+int	main(void)
+{
+	struct sigaction act;
+
+
+	printf ("server pid: %d\n", getpid());
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = SA_SIGINFO;
+	act.sa_handler = &handler;
+	//signal(SIGUSR1, handler);
+	sigaction(SIGUSR2, &act, NULL);
+	sigaction(SIGUSR1, &act, NULL);
+	while (1)
+	{
+		pause();
+	}
 	return (0);
 }
