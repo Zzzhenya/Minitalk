@@ -1,14 +1,12 @@
-#include <stdio.h>
 #include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "libft/libft.h"
 
 void	handler(int sig)
 {
 	if (sig ==SIGUSR1)
-		printf("1\n");
+		ft_printf("1\n");
 	else
-		printf("0\n");
+		ft_printf("0\n");
 }
 
 int	main(void)
@@ -16,7 +14,7 @@ int	main(void)
 	struct sigaction act;
 
 
-	printf ("server pid: %d\n", getpid());
+	ft_printf ("server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &handler;
