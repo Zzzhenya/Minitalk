@@ -1,8 +1,5 @@
-#include <stdio.h>
 #include <signal.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "libft/libft.h"
 
 void	send_one(int pid, char *str)
 {
@@ -27,11 +24,11 @@ int	main(int argc, char **argv)
 
 	if (argc == 3)
 	{
-		pid = atoi(argv[1]);
+		pid = ft_atoi(argv[1]);
 		str = argv[2];
 		send_one(pid, str);
 	}
 	else
-		printf("\nUsage : ./client server_pid ""String""\n\n");
+		ft_printf("\nUsage : ./client server_pid ""String""\n\n");
 	return (0);
 }
