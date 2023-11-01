@@ -1,5 +1,4 @@
-#include <signal.h>
-#include "libft/libft.h"
+#include "minitalk.h"
 
 void	send_one(int pid, char *str)
 {

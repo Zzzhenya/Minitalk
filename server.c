@@ -1,5 +1,6 @@
-#include <signal.h>
-#include "libft/libft.h"
+#include "minitalk.h"
+
+t_data   message;
 
 void	handler(int sig)
 {
