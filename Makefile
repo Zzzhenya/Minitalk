@@ -1,18 +1,36 @@
-CC= cc
+CC=cc
 
 FLAGS=-Wall -Werror -Wextra
 
+LIBFT =libft.a
 
+all: server client 
 
-all: server client
+server: server.c $(LIBFT)
+	@$(CC) $(FLAGS) server.c $(LIBFT) -o server
+	@echo "...server compiled."
 
-server: server.c
-	$(CC) $(FLAGS) server.c -o server
+client: client.c $(LIBFT)
+	@$(CC) $(FLAGS) client.c $(LIBFT) -o client
+	@echo "...client compiled."
 
-client: client.c
-	$(CC) $(FLAGS) client.c -o client
+$(LIBFT):libft/$(LIBFT)
+	@cp libft/$(LIBFT) $(LIBFT)
+	@echo "...libft.a copied to current directory."
+
+libft/$(LIBFT):
+	@$(MAKE) -C ./libft
 
 clean:
-	rm -rf server client
+	@$(MAKE) clean -C ./libft
+	@rm -rf server client
+	@echo "...server and client cleaned."
 
-.PHONY: all
+fclean:clean
+	@$(MAKE) fclean -C ./libft
+	@rm -f $(LIBFT)
+	@echo "...libft.a cleaned."
+
+re: fclean all
+
+.PHONY: all clean fclean re server client
