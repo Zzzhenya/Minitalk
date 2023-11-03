@@ -1,12 +1,12 @@
 #include "minitalk.h"
 
 t_data   message;
-
+/*
 void	bit_handler(int pid, char *str)
 {
 	take a stream of bits and convert it to a string of chars
 }
-
+*/
 
 void	handler(int sig)
 {
