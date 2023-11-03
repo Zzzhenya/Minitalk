@@ -36,7 +36,6 @@ void	string_handler(int pid, char *str)
 		}
 		usleep(100);
 	}
-	
 }
 
 int	main(int argc, char **argv)
