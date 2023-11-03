@@ -13,9 +13,9 @@ void	string_handler(int pid, char *str)
 		while (c < 7)
 		{
 			if (((str[i] >> c) & 1) == 1)
-				kill (pid, SIGUSR1);
-			else
 				kill (pid, SIGUSR2);
+			else
+				kill (pid, SIGUSR1);
 			usleep(100);
 			c ++;
 		}
@@ -29,30 +29,14 @@ void	string_handler(int pid, char *str)
 		while (c < 7)
 		{
 			if (((str[i] >> c) & 1) == 1)
-				kill (pid, SIGUSR1);
-			else
 				kill (pid, SIGUSR2);
+			else
+				kill (pid, SIGUSR1);
 			usleep(100);
 			c ++;
 		}
 		usleep(100);
 //		ft_printf("%c", str[i]);
-	}
-}
-
-void	send_one(int pid, char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '1')
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		usleep(300);
-		i ++;
 	}
 }
 
