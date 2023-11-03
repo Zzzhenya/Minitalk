@@ -1,12 +1,8 @@
 #include "minitalk.h"
 
-#include <stdio.h>
-
 t_data   message;
 
-/*
-	take a stream of bits and convert it to a string of chars
-*/
+/* take a stream of bits and convert it to a string of chars */
 
 void	bit_handler(int sig)
 {
@@ -31,7 +27,6 @@ int	main(void)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &bit_handler;
-	//signal(SIGUSR1, bit_handler);
 	sigaction(SIGUSR2, &act, NULL);
 	sigaction(SIGUSR1, &act, NULL);
 	while (1)

@@ -20,7 +20,6 @@ void	string_handler(int pid, char *str)
 			c ++;
 		}
 		usleep(100);
-//		ft_printf("%c", str[i]);
 		i ++;
 	}
 	if (str[i] == '\0')
@@ -36,8 +35,8 @@ void	string_handler(int pid, char *str)
 			c ++;
 		}
 		usleep(100);
-//		ft_printf("%c", str[i]);
 	}
+	
 }
 
 int	main(int argc, char **argv)
