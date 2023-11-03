@@ -1,5 +1,10 @@
 #include "minitalk.h"
 
+void	string_handler(int pid, char *str)
+{
+	take a string and send each letter as a stream of bits
+}
+
 void	send_one(int pid, char *str)
 {
 	int i;
