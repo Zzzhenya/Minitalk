@@ -1,6 +1,6 @@
 #include "minitalk.h"
 
-t_data	g_msg;
+t_msg	g_msg;
 /* take a stream of bits and convert it to a string of chars */
 
 static int	errexit(char *str)

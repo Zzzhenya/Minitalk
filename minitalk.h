@@ -4,10 +4,10 @@
 # include <signal.h>
 # include "libft/libft.h"
 
-typedef struct s_data
+typedef struct s_msg
 {
 	char			c;
 	int				i;
-}					t_data;
+}					t_msg;
 
 #endif
