@@ -14,7 +14,7 @@ void	send_letter(int pid, char c)
 			if (kill (pid, SIGUSR2) < 0)
 			{
 				ft_printf("kill() Error\n");
-				exit(1);
+				exit(0);
 			}
 		}
 		else
@@ -22,7 +22,7 @@ void	send_letter(int pid, char c)
 			if (kill (pid, SIGUSR1) < 0)
 			{
 				ft_printf("kill() Error\n");
-				exit(1);
+				exit(0);
 			}
 		}
 		usleep(100);
