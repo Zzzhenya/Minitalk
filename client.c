@@ -2,13 +2,13 @@
 
 /*takes a string and send each letter as a stream of bits*/
 
-int	errexit(char *str)
+static int	errexit(char *str)
 {
 	ft_printf(str);
 	return (0);
 }
 
-void	send_letter(int pid, char c)
+static void	send_letter(int pid, char c)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ void	send_letter(int pid, char c)
 	}
 }
 
-void	string_handler(int pid, char *str)
+static void	string_handler(int pid, char *str)
 {
 	int	i;
 
