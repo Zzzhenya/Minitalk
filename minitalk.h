@@ -6,8 +6,8 @@
 
 typedef struct s_data
 {
-	char			a;
-	int				c;
+	char			c;
+	int				i;
 }					t_data;
 
 #endif

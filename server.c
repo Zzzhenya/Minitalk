@@ -11,15 +11,15 @@ static int	errexit(char *str)
 
 static void	bit_handler(int sig)
 {
-	g_msg.a = g_msg.a + ((sig & 1) << g_msg.c);
-	g_msg.c++;
-	if (g_msg.c == 7)
+	g_msg.c = g_msg.c + ((sig & 1) << g_msg.i);
+	g_msg.i++;
+	if (g_msg.i == 7)
 	{
-		ft_printf("%c", g_msg.a);
-		if (!g_msg.a)
+		ft_printf("%c", g_msg.c);
+		if (!g_msg.c)
 			ft_printf("\n");
-		g_msg.a = 0;
 		g_msg.c = 0;
+		g_msg.i = 0;
 	}
 }
 
