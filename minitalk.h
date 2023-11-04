@@ -7,8 +7,7 @@
 typedef struct s_data
 {
 	char			a;
-	int 			c;
-	
+	int				c;
 }					t_data;
 
 #endif

@@ -1,7 +1,6 @@
 #include "minitalk.h"
 
-t_data   g_msg;
-
+t_data	g_msg;
 /* take a stream of bits and convert it to a string of chars */
 
 void	bit_handler(int sig)
@@ -20,7 +19,7 @@ void	bit_handler(int sig)
 
 int	main(void)
 {
-	struct sigaction act;
+	struct sigaction	act;
 
 	ft_printf ("server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);

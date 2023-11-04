@@ -2,9 +2,9 @@
 
 /*takes a string and send each letter as a stream of bits*/
 
-void send_letter(int pid, char c)
+void	send_letter(int pid, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 7)
@@ -32,7 +32,7 @@ void send_letter(int pid, char c)
 
 void	string_handler(int pid, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
