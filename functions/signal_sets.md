@@ -13,7 +13,7 @@ int sigemptyset(sigset_t *set);
 
 sigfillset() initializes a set to contain al signals (including all realtime signals)
 
-*int sigfillset(sigset_t *set);
+int sigfillset(sigset_t *set);
 
 
 One of these functions MUST be used to initialize a signal set.
