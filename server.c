@@ -1,21 +1,20 @@
 #include "minitalk.h"
 
-t_data   message;
+t_data   g_msg;
 
 /* take a stream of bits and convert it to a string of chars */
 
 void	bit_handler(int sig)
 {
-	//ft_printf("step: %d", message.a);
-	message.a = message.a + ((sig & 1) << message.c);
-	message.c++;
-	if (message.c == 7)
+	g_msg.a = g_msg.a + ((sig & 1) << g_msg.c);
+	g_msg.c++;
+	if (g_msg.c == 7)
 	{
-		ft_printf("%c", message.a);
-		if (!message.a)
+		ft_printf("%c", g_msg.a);
+		if (!g_msg.a)
 			ft_printf("\n");
-		message.a = 0;
-		message.c = 0;
+		g_msg.a = 0;
+		g_msg.c = 0;
 	}
 }
 
