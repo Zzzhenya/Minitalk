@@ -3,7 +3,13 @@
 t_data	g_msg;
 /* take a stream of bits and convert it to a string of chars */
 
-void	bit_handler(int sig)
+static int	errexit(char *str)
+{
+	ft_printf(str);
+	return (0);
+}
+
+static void	bit_handler(int sig)
 {
 	g_msg.a = g_msg.a + ((sig & 1) << g_msg.c);
 	g_msg.c++;
@@ -25,8 +31,10 @@ int	main(void)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &bit_handler;
-	sigaction(SIGUSR2, &act, NULL);
-	sigaction(SIGUSR1, &act, NULL);
+	if (sigaction(SIGUSR2, &act, NULL) < 0)
+		exit(errexit("sigaction() Error for SIGUSR2\n"));
+	if (sigaction(SIGUSR1, &act, NULL) < 0)
+		exit(errexit("sigaction() Error for SIGUSR1\n"));
 	while (1)
 	{
 		pause();
