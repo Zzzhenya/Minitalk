@@ -2,6 +2,12 @@
 
 /*takes a string and send each letter as a stream of bits*/
 
+int	errexit(char *str)
+{
+	ft_printf(str);
+	return (0);
+}
+
 void	send_letter(int pid, char c)
 {
 	int	i;
@@ -12,20 +18,15 @@ void	send_letter(int pid, char c)
 		if (((c >> i) & 1) == 1)
 		{
 			if (kill (pid, SIGUSR2) < 0)
-			{
-				ft_printf("kill() Error\n");
-				exit(0);
-			}
+				exit(errexit("kill() Error\n"));
 		}
 		else
 		{
 			if (kill (pid, SIGUSR1) < 0)
-			{
-				ft_printf("kill() Error\n");
-				exit(0);
-			}
+				exit(errexit("kill() Error\n"));
 		}
-		usleep(100);
+		if (usleep(100) < 0)
+			exit(errexit("usleep() Error\n"));
 		i ++;
 	}
 }
@@ -38,13 +39,15 @@ void	string_handler(int pid, char *str)
 	while (str[i] != '\0')
 	{
 		send_letter(pid, str[i]);
-		usleep(100);
+		if (usleep(100) < 0)
+			exit(errexit("usleep() Error\n"));
 		i ++;
 	}
 	if (str[i] == '\0')
 	{
 		send_letter(pid, str[i]);
-		usleep(100);
+		if (usleep(100) < 0)
+			exit(errexit("usleep() Error\n"));
 	}
 }
 
