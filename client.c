@@ -60,6 +60,6 @@ int	main(int argc, char **argv)
 		string_handler(pid, str);
 	}
 	else
-		ft_printf("\nUsage : ./client <server_pid> <Message>\n\n");
+		ft_printf("\nUsage : ./client <server_pid> ""Message""\n\n");
 	return (0);
 }
