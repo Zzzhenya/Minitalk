@@ -1,39 +1,49 @@
 #include "minitalk.h"
 
 /*takes a string and send each letter as a stream of bits*/
+
+void send_letter(int pid, char c)
+{
+	int i;
+
+	i = 0;
+	while (i < 7)
+	{
+		if (((c >> i) & 1) == 1)
+		{
+			if (kill (pid, SIGUSR2) < 0)
+			{
+				ft_printf("kill() Error\n");
+				exit(1);
+			}
+		}
+		else
+		{
+			if (kill (pid, SIGUSR1) < 0)
+			{
+				ft_printf("kill() Error\n");
+				exit(1);
+			}
+		}
+		usleep(100);
+		i ++;
+	}
+}
+
 void	string_handler(int pid, char *str)
 {
 	int i;
-	int c;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		c = 0;
-		while (c < 7)
-		{
-			if (((str[i] >> c) & 1) == 1)
-				kill (pid, SIGUSR2);
-			else
-				kill (pid, SIGUSR1);
-			usleep(100);
-			c ++;
-		}
+		send_letter(pid, str[i]);
 		usleep(100);
 		i ++;
 	}
 	if (str[i] == '\0')
 	{
-		c = 0;
-		while (c < 7)
-		{
-			if (((str[i] >> c) & 1) == 1)
-				kill (pid, SIGUSR2);
-			else
-				kill (pid, SIGUSR1);
-			usleep(100);
-			c ++;
-		}
+		send_letter(pid, str[i]);
 		usleep(100);
 	}
 }
