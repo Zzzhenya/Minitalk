@@ -13,14 +13,8 @@
 #include "minitalk.h"
 
 t_msg	g_msg;
+
 /* take a stream of bits and convert it to a string of chars */
-
-static void	errexit(char *str)
-{
-	ft_printf("%s\n", str);
-	exit (EXIT_FAILURE);
-}
-
 static void	bit_handler(int sig)
 {
 	g_msg.c = g_msg.c + ((sig & 1) << g_msg.i);
@@ -44,9 +38,9 @@ int	main(void)
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &bit_handler;
 	if (sigaction(SIGUSR2, &act, NULL) < 0)
-		errexit("sigaction() Error for SIGUSR2.");
+		ft_errexit("sigaction() Error for SIGUSR2.");
 	if (sigaction(SIGUSR1, &act, NULL) < 0)
-		errexit("sigaction() Error for SIGUSR1.");
+		ft_errexit("sigaction() Error for SIGUSR1.");
 	while (1)
 	{
 		pause();

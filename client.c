@@ -13,13 +13,6 @@
 #include "minitalk.h"
 
 /*takes a string and send each letter as a stream of bits*/
-
-static void	errexit(char *str)
-{
-	ft_printf ("%s\n", str);
-	exit (EXIT_FAILURE);
-}
-
 static void	send_letter(int pid, char c)
 {
 	int	i;
@@ -30,15 +23,15 @@ static void	send_letter(int pid, char c)
 		if (((c >> i) & 1) == 1)
 		{
 			if (kill (pid, SIGUSR2) < 0)
-				errexit("kill() error.");
+				ft_errexit("kill() error.");
 		}
 		else
 		{
 			if (kill (pid, SIGUSR1) < 0)
-				errexit("kill() error.");
+				ft_errexit("kill() error.");
 		}
 		if (usleep(100) < 0)
-			errexit("usleep() error.");
+			ft_errexit("usleep() error.");
 		i ++;
 	}
 }
@@ -52,14 +45,14 @@ static void	string_handler(int pid, char *str)
 	{
 		send_letter(pid, str[i]);
 		if (usleep(100) < 0)
-			errexit("usleep() error.");
+			ft_errexit("usleep() error.");
 		i ++;
 	}
 	if (str[i] == '\0')
 	{
 		send_letter(pid, str[i]);
 		if (usleep(100) < 0)
-			errexit("usleep() error.");
+			ft_errexit("usleep() error.");
 	}
 }
 
