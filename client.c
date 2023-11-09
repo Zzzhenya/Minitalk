@@ -16,8 +16,8 @@
 
 static int	errexit(char *str)
 {
-	ft_printf(str);
-	return (0);
+	ft_printf ("%s\n", str);
+	exit (EXIT_FAILURE);
 }
 
 static void	send_letter(int pid, char c)
@@ -30,15 +30,15 @@ static void	send_letter(int pid, char c)
 		if (((c >> i) & 1) == 1)
 		{
 			if (kill (pid, SIGUSR2) < 0)
-				exit(errexit("kill() Error\n"));
+				errexit("kill() error.");
 		}
 		else
 		{
 			if (kill (pid, SIGUSR1) < 0)
-				exit(errexit("kill() Error\n"));
+				errexit("kill() error.");
 		}
 		if (usleep(100) < 0)
-			exit(errexit("usleep() Error\n"));
+			errexit("usleep() error.");
 		i ++;
 	}
 }
@@ -52,14 +52,14 @@ static void	string_handler(int pid, char *str)
 	{
 		send_letter(pid, str[i]);
 		if (usleep(100) < 0)
-			exit(errexit("usleep() Error\n"));
+			errexit("usleep() error.");
 		i ++;
 	}
 	if (str[i] == '\0')
 	{
 		send_letter(pid, str[i]);
 		if (usleep(100) < 0)
-			exit(errexit("usleep() Error\n"));
+			errexit("usleep() error.");
 	}
 }
 
