@@ -14,7 +14,7 @@
 
 /*takes a string and send each letter as a stream of bits*/
 
-static int	errexit(char *str)
+static void	errexit(char *str)
 {
 	ft_printf ("%s\n", str);
 	exit (EXIT_FAILURE);
