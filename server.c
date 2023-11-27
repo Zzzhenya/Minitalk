@@ -17,7 +17,10 @@ t_msg	g_msg;
 /* take a stream of bits and convert it to a string of chars */
 static void	bit_handler(int sig)
 {
-	g_msg.c = g_msg.c + ((sig & 1) << g_msg.i);
+	if (sig == SIGUSR2)
+		g_msg.c = g_msg.c + (1 << g_msg.i);
+	else if (sig == SIGUSR1)
+		g_msg.c = g_msg.c + (0 << g_msg.i);
 	g_msg.i++;
 	if (g_msg.i == 7)
 	{
