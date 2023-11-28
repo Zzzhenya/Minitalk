@@ -16,6 +16,9 @@
 # include <signal.h>
 # include "libft/libft.h"
 
+# define int BUSY = 1;
+# define int FREE = 0;
+
 typedef struct s_msg
 {
 	char			c;
