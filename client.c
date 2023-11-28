@@ -22,12 +22,14 @@ static void	send_letter(int pid, char c)
 	{
 		if (((c >> i) & 1) == 1)
 		{
-			kill (pid, SIGUSR2);
+			if (kill (pid, SIGUSR2) < 0)
+				ft_errexit("kill() failed.");
 			usleep(300);
 		}
 		else
 		{
-			kill (pid, SIGUSR1);
+			if (kill (pid, SIGUSR1) < 0)
+				ft_errexit("kill() failed.");
 			usleep(300);
 		}
 		i ++;
@@ -67,7 +69,8 @@ int	main(int argc, char **argv)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &busy;
-	sigaction(SIGUSR1, &act, NULL);
+	if (sigaction(SIGUSR1, &act, NULL) < 0)
+		ft_errexit("sigaction() failed for SIGUSR1.");
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);

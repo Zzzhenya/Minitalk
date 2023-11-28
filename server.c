@@ -46,7 +46,10 @@ static void	bit_handler(int sig, siginfo_t *info, void *x)
 		}
 	}
 	else
-		kill (info->si_pid, SIGUSR1);
+	{
+		if (kill (info->si_pid, SIGUSR1) < 0)
+			ft_errexit("kill() failed.");
+	}
 }
 
 int	main(void)
@@ -63,9 +66,9 @@ int	main(void)
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &bit_handler;
 	if (sigaction(SIGUSR2, &act, NULL) < 0)
-		ft_errexit("sigaction() Error for SIGUSR2.");
+		ft_errexit("sigaction() failed for SIGUSR2.");
 	if (sigaction(SIGUSR1, &act, NULL) < 0)
-		ft_errexit("sigaction() Error for SIGUSR1.");
+		ft_errexit("sigaction() failed for SIGUSR1.");
 	while (1)
 	{
 		pause();
