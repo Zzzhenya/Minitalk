@@ -15,7 +15,7 @@
 t_msg	g_msg;
 
 /* take a stream of bits and convert it to a string of chars */
-static void	bit_handler(int sig)
+static void	bit_handler(int sig, siginfo_t *info, void *)
 {
 	if (sig == SIGUSR2)
 		g_msg.c = g_msg.c + (1 << g_msg.i);
@@ -39,7 +39,8 @@ int	main(void)
 	ft_printf ("server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
-	act.sa_handler = &bit_handler;
+	//act.sa_handler = &bit_handler;
+	act.sa_sigaction = &bit_handler;
 	if (sigaction(SIGUSR2, &act, NULL) < 0)
 		ft_errexit("sigaction() Error for SIGUSR2.");
 	if (sigaction(SIGUSR1, &act, NULL) < 0)
