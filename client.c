@@ -59,7 +59,7 @@ static void	busy(int sig)
 	if (sig == SIGUSR1)
 		ft_errexit ("\nServer is busy. Please wait.\n");
 	else if (sig == SIGUSR2)
-		ft_putstr_fd ("\nMessage complete.\n", 1);
+		ft_errexit ("\nMessage complete.\n");
 }
 
 int	main(int argc, char **argv)
@@ -72,6 +72,8 @@ int	main(int argc, char **argv)
 	act.sa_flags = SA_SIGINFO;
 	act.sa_handler = &busy;
 	if (sigaction (SIGUSR1, &act, NULL) < 0)
+		ft_errexit ("sigaction() failed for SIGUSR1.");
+	if (sigaction (SIGUSR2, &act, NULL) < 0)
 		ft_errexit ("sigaction() failed for SIGUSR1.");
 	if (argc == 3)
 	{

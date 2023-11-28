@@ -14,14 +14,12 @@
 
 t_msg	g_msg;
 
-static void	write_char(char c)
-{
-	write (1, &c, 1);
-}
-
 /* take a stream of bits and convert it to a string of chars */
-static void	bit_handler(int sig, siginfo_t *info, void *x)
+void	bit_handler(int sig, siginfo_t *info, void *x)
 {
+	static char *str;
+
+	str = NULL;
 	(void)x;
 	if (g_msg.pid == 0)
 		g_msg.pid = info->si_pid;
@@ -34,15 +32,7 @@ static void	bit_handler(int sig, siginfo_t *info, void *x)
 		g_msg.i++;
 		if (g_msg.i == 7)
 		{
-			if (g_msg.c)
-				write_char(g_msg.c);
-			if (!g_msg.c)
-			{
-				write_char('\n');
-				g_msg.pid = 0;
-			}
-			g_msg.c = 0;
-			g_msg.i = 0;
+			write_char(str, g_msg);
 		}
 	}
 	else
@@ -59,6 +49,7 @@ int	main(void)
 	g_msg.pid = 0;
 	g_msg.c = 0;
 	g_msg.i = 0;
+	g_msg.j = 0;
 	ft_putstr_fd("Server pid: ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putchar_fd('\n', 1);
