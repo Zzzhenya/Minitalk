@@ -6,7 +6,7 @@
 /*   By: sde-silv <sde-silv@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:43:13 by sde-silv          #+#    #+#             */
-/*   Updated: 2023/11/04 16:44:11 by shenya           ###   ########.fr       */
+/*   Updated: 2023/11/28 16:59:16 by sde-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	string_handler(int pid, char *str)
 	}
 }
 
-static void busy(int sig)
+static void	busy(int sig)
 {
 	if (sig == SIGUSR1)
 		ft_errexit("\nServer is busy. Please wait.\n");
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 {
 	int					pid;
 	char				*str;
-	struct sigaction 	act;
+	struct sigaction	act;
 
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;

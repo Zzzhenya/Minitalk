@@ -6,7 +6,7 @@
 /*   By: sde-silv <sde-silv@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:50:16 by sde-silv          #+#    #+#             */
-/*   Updated: 2023/11/04 16:50:27 by sde-silv         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:58:22 by sde-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_msg	g_msg;
 
-static void write_char(char c)
+static void	write_char(char c)
 {
 	write (1, &c, 1);
 }
@@ -25,7 +25,7 @@ static void	bit_handler(int sig, siginfo_t *info, void *x)
 	(void)x;
 	if (g_msg.pid == 0)
 		g_msg.pid = info->si_pid;
-	if (g_msg.pid == info->si_pid  && g_msg.pid != 0)
+	if (g_msg.pid == info->si_pid && g_msg.pid != 0)
 	{
 		if (sig == SIGUSR2)
 			g_msg.c += (1 << g_msg.i);
