@@ -20,6 +20,8 @@ typedef struct s_msg
 {
 	char			c;
 	int				i;
+	int 			pid;
+	int 			status;
 }					t_msg;
 
 #endif
