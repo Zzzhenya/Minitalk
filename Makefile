@@ -7,7 +7,7 @@ LIBFT =libft.a
 all: server client $(LIBFT)
 
 server: server.o $(LIBFT)
-	@$(CC) $(FLAGS) -o server server.o -L. $(LIBFT)
+	@$(CC) $(FLAGS) -o server server.o -L. -lft
 	@echo "...server linked."
 
 server.o: server.c $(LIBFT)
@@ -15,7 +15,7 @@ server.o: server.c $(LIBFT)
 	@echo "...server compiled."
 
 client: client.o $(LIBFT)
-	@$(CC) $(FLAGS) -o  client client.o -L. $(LIBFT)
+	@$(CC) $(FLAGS) -o  client client.o -L. -lft
 	@echo "...client linked."
 
 client.o: client.c
@@ -33,13 +33,13 @@ clean:
 	@$(MAKE) clean -C ./libft
 	@rm -rf client.o server.o
 	@echo "...server and client OBJS cleaned."
-	@rm -rf server client
-	@echo "...server and client cleaned."
 
 fclean:clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(LIBFT)
 	@echo "...libft.a cleaned."
+	@rm -rf server client
+	@echo "...server and client cleaned."
 
 re: fclean all
 
