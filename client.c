@@ -24,13 +24,13 @@ static void	send_letter(int pid, char c)
 		{
 			if (kill (pid, SIGUSR2) < 0)
 				ft_errexit ("kill() failed.");
-			usleep (300);
+			usleep (100);
 		}
 		else
 		{
 			if (kill (pid, SIGUSR1) < 0)
 				ft_errexit ("kill() failed.");
-			usleep (300);
+			usleep (100);
 		}
 		i ++;
 	}
@@ -44,13 +44,13 @@ static void	string_handler(int pid, char *str)
 	while (str[i] != '\0')
 	{
 		send_letter (pid, str[i]);
-		usleep (300);
+		usleep (100);
 		i ++;
 	}
 	if (str[i] == '\0')
 	{
 		send_letter (pid, str[i]);
-		usleep (300);
+		usleep (100);
 	}
 }
 
