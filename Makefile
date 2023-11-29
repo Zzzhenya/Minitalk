@@ -1,46 +1,44 @@
-CC=cc
+NAME1 = server
 
-FLAGS=-Wall -Werror -Wextra
+NAME2 = client
 
-LIBFT =libft.a
+LIBFT = libft.a
 
-all: server client $(LIBFT)
+HEADER = minitalk.h
 
-server: server.o $(LIBFT)
-	@$(CC) $(FLAGS) -o server server.o -L. -lft
-	@echo "...server linked."
+SRCS = server.c 
 
-server.o: server.c $(LIBFT)
-	@$(CC) $(FLAGS) -c server.c -o server.o
-	@echo "...server compiled."
+SRC = client.c
 
-client: client.o $(LIBFT)
-	@$(CC) $(FLAGS) -o  client client.o -L. -lft
-	@echo "...client linked."
+CC = cc
 
-client.o: client.c
-	@$(CC) $(FLAGS) -c client.c -o client.o
-	@echo "...client compiled."
+CFLAGS = -Wall -Wextra -Werror
 
-$(LIBFT): libft/$(LIBFT)
+all: $(NAME1) $(NAME2)
+
+$(NAME1): $(LIBFT) $(SRCS) $(HEADER)
+	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -o $(NAME1)
+
+$(NAME2): $(LIBFT) $(SRC) $(HEADER)
+	@$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME2)
+
+$(LIBFT):libft/$(LIBFT)
 	@cp libft/$(LIBFT) $(LIBFT)
-	@echo "...libft.a copied to current directory."
 
 libft/$(LIBFT):
 	@$(MAKE) -C ./libft
 
 clean:
 	@$(MAKE) clean -C ./libft
-	@rm -rf client.o server.o
-	@echo "...server and client OBJS cleaned."
+	
 
-fclean:clean
+fclean: clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(LIBFT)
 	@echo "...libft.a cleaned."
-	@rm -rf server client
-	@echo "...server and client cleaned."
+	@rm -f $(NAME1) $(NAME2)
+	@echo "...binaries cleaned."
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all fclean re clean

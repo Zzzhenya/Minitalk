@@ -83,9 +83,7 @@ int	main(int argc, char **argv)
 			ft_errexit ("Empty message.");
 		string_handler (pid, str);
 		while (1)
-		{
 			pause ();
-		}
 	}
 	else
 		ft_printf ("\nUsage : ./client <server_pid> ""Message""\n\n");

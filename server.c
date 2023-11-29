@@ -14,16 +14,59 @@
 
 t_msg	g_msg;
 
+static char	*char_to_str(char c)
+{
+	char	*str;
+
+	str = malloc (sizeof(char) * 2);
+	if (!str)
+		return (NULL);
+	str[0] = c;
+	str[1] = '\0';
+	return (str);
+}
+
+static char	*char_collector(char *str, char c, int sig)
+{
+	char	*s2;
+
+	s2 = NULL;
+	if (c)
+	{
+		s2 = char_to_str(c);
+		if (!s2)
+			ft_errexit("Malloc failed");
+		str = gnl_ft_strjoin(str, s2);
+		free(s2);
+		g_msg.j++;
+	}
+	else if (!c)
+	{
+		ft_putstr_fd(str, 1);
+		ft_putchar_fd('\n', 1);
+		free (str);
+		str = NULL;
+		kill (g_msg.pid, sig);
+		g_msg.pid = 0;
+		g_msg.j = 0;
+	}
+	return (str);
+}
+
 /* take a stream of bits and convert it to a string of chars */
 void	bit_handler(int sig, siginfo_t *info, void *x)
 {
-	static char *str=NULL;
-	char *s2;
+	static char	*str = NULL;
 
 	(void)x;
 	if (g_msg.pid == 0)
 		g_msg.pid = info->si_pid;
-	if (g_msg.pid == info->si_pid && g_msg.pid != 0)
+	if (g_msg.pid != info->si_pid)
+	{
+		kill (info->si_pid, SIGUSR1);
+		return ;
+	}
+	else
 	{
 		if (sig == SIGUSR2)
 			g_msg.c += (1 << g_msg.i);
@@ -32,37 +75,10 @@ void	bit_handler(int sig, siginfo_t *info, void *x)
 		g_msg.i++;
 		if (g_msg.i == 7)
 		{
-			if (g_msg.c)
-			{
-				if (g_msg.j == 0)
-				{
-					str = malloc(sizeof(char)* 1);
-					str[0] = '\0';
-				}
-				s2 = malloc(sizeof(char)* 2);
-				s2[0] = g_msg.c;
-				s2[1] = '\0';
-				str = gnl_ft_strjoin(str, s2);
-				g_msg.j++;
-				free(s2);
-			}
-			if (!g_msg.c)
-			{
-				str = gnl_ft_strjoin(str, "\n");
-				ft_putstr_fd(str, 1);
-				free (str);
-				kill (g_msg.pid, SIGUSR2);
-				g_msg.pid = 0;
-				g_msg.j= 0;
-			}
+			str = char_collector(str, g_msg.c, SIGUSR2);
 			g_msg.c = 0;
 			g_msg.i = 0;
 		}
-	}
-	else
-	{
-		if (kill (info->si_pid, SIGUSR1) < 0)
-			ft_errexit("kill() failed.");
 	}
 }
 
@@ -74,9 +90,7 @@ int	main(void)
 	g_msg.c = 0;
 	g_msg.i = 0;
 	g_msg.j = 0;
-	ft_putstr_fd("Server pid: ", 1);
-	ft_putnbr_fd(getpid(), 1);
-	ft_putchar_fd('\n', 1);
+	ft_printf("Server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &bit_handler;
