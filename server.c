@@ -38,7 +38,6 @@ static char	*char_collector(char *str, char c, int sig)
 		str = NULL;
 		kill (g_msg.pid, sig);
 		g_msg.pid = 0;
-		g_msg.j = 0;
 	}
 	return (str);
 }
@@ -79,7 +78,6 @@ int	main(void)
 	g_msg.pid = 0;
 	g_msg.c = 0;
 	g_msg.i = 0;
-	g_msg.j = 0;
 	ft_printf("Server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;

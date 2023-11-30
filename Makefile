@@ -1,44 +1,36 @@
-NAME1 = server
+CC=cc
 
-NAME2 = client
+FLAGS=-Wall -Werror -Wextra
 
-LIBFT = libft.a
+LIBFT =libft.a
 
-HEADER = minitalk.h
+all: server client 
 
-SRCS = server.c 
+server: server.c $(LIBFT)
+	@$(CC) $(FLAGS) server.c $(LIBFT) -o server
+	@echo "...server compiled."
 
-SRC = client.c
-
-CC = cc
-
-CFLAGS = -Wall -Wextra -Werror
-
-all: $(NAME1) $(NAME2)
-
-$(NAME1): $(LIBFT) $(SRCS) $(HEADER)
-	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -o $(NAME1)
-
-$(NAME2): $(LIBFT) $(SRC) $(HEADER)
-	@$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME2)
+client: client.c $(LIBFT)
+	@$(CC) $(FLAGS) client.c $(LIBFT) -o client
+	@echo "...client compiled."
 
 $(LIBFT):libft/$(LIBFT)
 	@cp libft/$(LIBFT) $(LIBFT)
+	@echo "...libft.a copied to current directory."
 
 libft/$(LIBFT):
 	@$(MAKE) -C ./libft
 
 clean:
 	@$(MAKE) clean -C ./libft
-	
+	@rm -rf server client
+	@echo "...server and client cleaned."
 
-fclean: clean
+fclean:clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(LIBFT)
 	@echo "...libft.a cleaned."
-	@rm -f $(NAME1) $(NAME2)
-	@echo "...binaries cleaned."
 
 re: fclean all
 
-.PHONY: all fclean re clean
+.PHONY: all clean fclean re
