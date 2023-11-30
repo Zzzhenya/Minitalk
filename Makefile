@@ -23,13 +23,14 @@ libft/$(LIBFT):
 
 clean:
 	@$(MAKE) clean -C ./libft
-	@rm -rf server client
-	@echo "...server and client cleaned."
+	
 
 fclean:clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(LIBFT)
 	@echo "...libft.a cleaned."
+	@rm -rf server client
+	@echo "...server and client cleaned."
 
 re: fclean all
 
