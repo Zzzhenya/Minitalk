@@ -16,30 +16,20 @@ t_msg	g_msg;
 
 static char	*char_to_str(char c)
 {
-	char	*str;
+	char	str[2];
+	char	*s;
 
-	str = malloc (sizeof(char) * 2);
-	if (!str)
-		return (NULL);
+	s = NULL;
 	str[0] = c;
 	str[1] = '\0';
-	return (str);
+	s = str;
+	return (s);
 }
 
 static char	*char_collector(char *str, char c, int sig)
 {
-	char	*s2;
-
-	s2 = NULL;
 	if (c)
-	{
-		s2 = char_to_str(c);
-		if (!s2)
-			ft_errexit("Malloc failed");
-		str = gnl_ft_strjoin(str, s2);
-		free(s2);
-		g_msg.j++;
-	}
+		str = gnl_ft_strjoin(str, char_to_str(c));
 	else if (!c)
 	{
 		ft_putstr_fd(str, 1);
@@ -99,8 +89,6 @@ int	main(void)
 	if (sigaction(SIGUSR1, &act, NULL) < 0)
 		ft_errexit("sigaction() failed for SIGUSR1.");
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }

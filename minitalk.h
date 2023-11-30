@@ -22,11 +22,6 @@ typedef struct s_msg
 	char		c;
 	int			i;
 	int			pid;
-	int			j;
-	char 		*str;
 }				t_msg;
-
-void	write_char(char *str, t_msg	g_msg);
-void	bit_handler(int sig, siginfo_t *info, void *x);
 
 #endif
