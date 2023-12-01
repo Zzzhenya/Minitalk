@@ -17,11 +17,14 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
+# define MSG_SIZE 60000
+
 typedef struct s_msg
 {
 	char		c;
 	int			i;
 	int			pid;
+	int 		j;
 }				t_msg;
 
 #endif

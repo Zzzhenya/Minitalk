@@ -24,13 +24,13 @@ static void	send_letter(int pid, char c)
 		{
 			if (kill (pid, SIGUSR2) < 0)
 				ft_errexit ("kill() failed.");
-			usleep (100);
+			usleep (50);
 		}
 		else
 		{
 			if (kill (pid, SIGUSR1) < 0)
 				ft_errexit ("kill() failed.");
-			usleep (100);
+			usleep (50);
 		}
 		i ++;
 	}
