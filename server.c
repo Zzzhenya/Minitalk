@@ -12,48 +12,31 @@
 
 #include "minitalk.h"
 
-t_msg	g_msg;
-/*
-static char	*char_to_str(char c)
-{
-	char	str[2];
-	char	*s;
 
-	s = NULL;
-	str[0] = c;
-	str[1] = '\0';
-	s = str;
-	return (s);
-}*/
-
-//static char	*char_collector(char *str, char c, int sig)
-void char_collector(char *str, char c, int sig)
+void char_collector(char *str, int sig, t_msg  *g_msg)
 {
-	if (c)
+	if (g_msg->c)
 	{
-		//str = gnl_ft_strjoin(str, char_to_str(c));
-		str[g_msg.j] = c;
-		g_msg.j++;
+		str[g_msg->j] = g_msg->c;
+		g_msg->j++;
 	}
-	else if (!c)
+	else if (!g_msg->c)
 	{
-		str[g_msg.j] = '\0';
-		ft_printf("msg_size: %d\n", g_msg.j);
+		str[g_msg->j] = '\0';
 		ft_putstr_fd(str, 1);
 		ft_putchar_fd('\n', 1);
 		ft_memset(str, '\0', MSG_SIZE);
 		str = NULL;
-		kill (g_msg.pid, sig);
-		g_msg.pid = 0;
-		g_msg.j = 0;
+		kill (g_msg->pid, sig);
+		g_msg->pid = 0;
+		g_msg->j = 0;
 	}
-	//return (str);
 }
 
 /* take a stream of bits and convert it to a string of chars */
 void	bit_handler(int sig, siginfo_t *info, void *x)
 {
-	//static char	*str = NULL;
+	static t_msg	g_msg;
 	static char	str[MSG_SIZE];
 
 	(void)x;
@@ -73,7 +56,7 @@ void	bit_handler(int sig, siginfo_t *info, void *x)
 		g_msg.i++;
 		if (g_msg.i == 7)
 		{
-			char_collector(str, g_msg.c, SIGUSR2);
+			char_collector(str, SIGUSR2, &g_msg);
 			//str = char_collector(str, g_msg.c, SIGUSR2);
 			g_msg.c = 0;
 			g_msg.i = 0;
@@ -85,10 +68,6 @@ int	main(void)
 {
 	struct sigaction	act;
 
-	g_msg.pid = 0;
-	g_msg.c = 0;
-	g_msg.i = 0;
-	g_msg.j = 0;
 	ft_printf("Server pid: %d\n", getpid());
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
