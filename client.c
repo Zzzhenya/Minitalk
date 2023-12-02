@@ -12,7 +12,7 @@
 
 #include "minitalk.h"
 
-/*takes a string and send each letter as a stream of bits*/
+/*takes a char and send as a stream of bits*/
 static void	send_letter(int pid, char c)
 {
 	int	i;
@@ -36,6 +36,7 @@ static void	send_letter(int pid, char c)
 	}
 }
 
+/* take each char*/
 static void	string_handler(int pid, char *str)
 {
 	int	i;
@@ -54,6 +55,7 @@ static void	string_handler(int pid, char *str)
 	}
 }
 
+/* Receive signal from server when busy or message complete"*/
 static void	busy(int sig)
 {
 	if (sig == SIGUSR1)

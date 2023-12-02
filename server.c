@@ -12,37 +12,37 @@
 
 #include "minitalk.h"
 
-
-void char_collector(char *str, int sig, t_msg  *g_msg)
+/* Print all the chars at the end of the m*/
+static void	char_collector(char *str, int sig, t_msg *msg)
 {
-	if (g_msg->c)
+	if (msg->c)
 	{
-		str[g_msg->j] = g_msg->c;
-		g_msg->j++;
+		str[msg->j] = msg->c;
+		msg->j++;
 	}
-	else if (!g_msg->c)
+	else if (!msg->c)
 	{
-		str[g_msg->j] = '\0';
+		str[msg->j] = '\0';
 		ft_putstr_fd(str, 1);
 		ft_putchar_fd('\n', 1);
 		ft_memset(str, '\0', MSG_SIZE);
 		str = NULL;
-		kill (g_msg->pid, sig);
-		g_msg->pid = 0;
-		g_msg->j = 0;
+		kill (msg->pid, sig);
+		msg->pid = 0;
+		msg->j = 0;
 	}
 }
 
 /* take a stream of bits and convert it to a string of chars */
 void	bit_handler(int sig, siginfo_t *info, void *x)
 {
-	static t_msg	g_msg;
-	static char	str[MSG_SIZE];
+	static t_msg	msg;
+	static char		str[MSG_SIZE];
 
 	(void)x;
-	if (g_msg.pid == 0)
-		g_msg.pid = info->si_pid;
-	if (g_msg.pid != info->si_pid)
+	if (msg.pid == 0)
+		msg.pid = info->si_pid;
+	if (msg.pid != info->si_pid)
 	{
 		kill (info->si_pid, SIGUSR1);
 		return ;
@@ -50,16 +50,15 @@ void	bit_handler(int sig, siginfo_t *info, void *x)
 	else
 	{
 		if (sig == SIGUSR2)
-			g_msg.c += (1 << g_msg.i);
+			msg.c += (1 << msg.i);
 		else if (sig == SIGUSR1)
-			g_msg.c += (0 << g_msg.i);
-		g_msg.i++;
-		if (g_msg.i == 7)
+			msg.c += (0 << msg.i);
+		msg.i++;
+		if (msg.i == 7)
 		{
-			char_collector(str, SIGUSR2, &g_msg);
-			//str = char_collector(str, g_msg.c, SIGUSR2);
-			g_msg.c = 0;
-			g_msg.i = 0;
+			char_collector(str, SIGUSR2, &msg);
+			msg.c = 0;
+			msg.i = 0;
 		}
 	}
 }
