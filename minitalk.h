@@ -21,10 +21,10 @@
 
 typedef struct s_msg
 {
-	char		c;
-	int			i;
-	int			pid;
-	int 		j;
+	char			c;
+	int				i;
+	int				pid;
+	int				j;
 }				t_msg;
 
 #endif
