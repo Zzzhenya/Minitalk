@@ -80,9 +80,9 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		pid = ft_atoi (argv[1]);
+		if (pid < 1000)
+			ft_errexit ("That's a system process, not a server.");
 		str = argv[2];
-		if (ft_strlen (str) == 0)
-			ft_errexit ("Empty message.");
 		string_handler (pid, str);
 		while (1)
 			pause ();
@@ -91,3 +91,5 @@ int	main(int argc, char **argv)
 		ft_printf ("\nUsage : ./client <server_pid> ""Message""\n\n");
 	return (0);
 }
+/*		//if (ft_strlen (str) == 0)
+		//	ft_errexit ("Empty message.");*/
