@@ -27,10 +27,13 @@ static void	char_collector(char *str, int sig, t_msg *msg)
 		ft_putchar_fd('\n', 1);
 		ft_memset(str, '\0', MSG_SIZE);
 		str = NULL;
-		kill (msg->pid, sig);
+		if (kill (msg->pid, sig) < 0)
+			ft_errexit ("kill() failed.");
 		msg->pid = 0;
 		msg->j = 0;
 	}
+	msg->c = 0;
+	msg->i = 0;
 }
 
 /* take a stream of bits and convert it to a string of chars */
@@ -44,7 +47,8 @@ void	bit_handler(int sig, siginfo_t *info, void *x)
 		msg.pid = info->si_pid;
 	if (msg.pid != info->si_pid)
 	{
-		kill (info->si_pid, SIGUSR1);
+		if (kill (info->si_pid, SIGUSR1) < 0)
+			ft_errexit ("kill() failed.");
 		return ;
 	}
 	else
@@ -55,11 +59,7 @@ void	bit_handler(int sig, siginfo_t *info, void *x)
 			msg.c += (0 << msg.i);
 		msg.i++;
 		if (msg.i == 7)
-		{
 			char_collector(str, SIGUSR2, &msg);
-			msg.c = 0;
-			msg.i = 0;
-		}
 	}
 }
 
